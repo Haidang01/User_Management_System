@@ -1,0 +1,74 @@
+﻿@model IEnumerable<BT_MVC_Web.Models.Employee>
+
+@{
+    ViewData["Title"] = "Danh sách bệnh nhân";
+}
+<div class="px-2 mt-3 ">
+    <div class="d-flex px-2 mb-3 justify-content-between">
+        <a asp-controller="Employee" class="btn btn-primary mb-3 " asp-action="Create">Add New</a>
+        <div class="fs-2 fw-bolder text-info">Danh sách bệnh nhân</div>
+    </div>
+    <form method="post" action="/Employee/ExportToExcel">
+        <table class="table table-bordered table-striped" width="100%" id="myTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>
+                        Tên
+                    </th>
+                    <th>
+                        Ngày sinh
+                    </th>
+                    <th>
+                        Tuổi
+                    </th>
+                    <th>
+                        Giới tính
+                    </th>
+                    <th>
+                        CCCD/CMND
+                    </th>
+                    <th>
+                        Số điện thoại
+                    </th>
+                    <th>
+                        Dân tộc
+                    </th>
+                    <th>
+                        Nghề nghiệp
+                    </th>
+                    <th>
+                        Xã
+                    </th>
+                    <th>
+                        Huyện
+                    </th>
+                    <th>
+                        Tỉnh
+                    </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+        </table>
+        <button style="width: 80px;" type="submit" class="btn btn-danger">Export</button>
+        <a class="btn btn-warning" id="toggleFormButton" href="javascript:void(0);">Import</a>
+    </form>
+    <form method="post" action="/Employee/ImportFromExcel" enctype="multipart/form-data">
+        <div id="importForm" style="display:none;margin-top: 20px;">
+            <input style="width: 20%;" name="file" type="file" id="excelFileInput" accept=".xlsx" />
+            <button style="width: 80px;" class="btn btn-success" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#toggleFormButton").click(function () {
+            $("#importForm").toggle();
+        });
+    })
+</script>
+
+@section Scripts{
+    <script src="~/js/table1.js"></script>
+}

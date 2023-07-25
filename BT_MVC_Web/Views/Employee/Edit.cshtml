@@ -1,0 +1,335 @@
+﻿@using BT_MVC_Web.Enums;
+@model EmployeeVM
+
+@{
+    ViewData["Title"] = "Edit Employee";
+}
+
+@Html.ValidationSummary()
+<section class="border border-secondary px-1 pb-2 pt-2 rounded-1 m-2">
+    <form method="post" action="/Employee/EditPost">
+        @*<div asp-validation-summary="All"></div>*@
+        <input style="font-size: 12px"
+               asp-for="Employee.Id" hidden />
+        <span class="fw-bold mx-2"
+              style="font-size: 12px">Chỉnh sửa bệnh nhân</span>
+        <div style="min-height:50vh;" class="p-3 border-primary border mt-4 mx-2 rounded">
+            <div class="row">
+                <div class="col-3">
+                    <label for="fullname"
+                           asp-for="Employee.Name"
+                           class="form-label"
+                           style="font-size: 12px">
+                        [1] Họ và tên bệnh nhân(<span class="text-danger">*</span>)
+                    </label>
+                    <input style="font-size: 12px"
+                           asp-for="Employee.Name"
+                           class="form-control text-secondary fw-normal"
+                           type="text"
+                           id="fullname" />
+                    <span style="font-size: 12px" asp-validation-for="Employee.Name" class="text-danger"></span>
+                </div>
+                <div class="col-3 d-flex pl-3 justify-content-between  gap-1">
+                    <div class="col-7">
+                        <label for="DateOfBirth"
+                               asp-for="Employee.DateOfBirth"
+                               style="font-size: 12px"
+                               class="form-label">[2] Ngày sinh (<span class="text-danger">*</span>)</label>
+                        <input class="form-control"
+                               asp-for="Employee.DateOfBirth"
+                               type="date"
+                               style="font-size: 12px"
+                               id="DateOfBirth" />
+                        <span style="font-size: 12px" asp-validation-for="Employee.DateOfBirth" class="text-danger"></span>
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label"
+                               for="age"
+                               style="font-size: 12px">Tuổi</label>
+                        <input style="font-size: 12px; background-color: #f2f2f2;pointer-events: none;"
+                               readonly
+                               asp-for="Employee.age"
+                               type="number"
+                               class="form-control text-secondary fw-normal"
+                               id="age" />
+                        <span style="font-size: 12px" asp-validation-for="Employee.age" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="col-3">
+                    <label class="form-label d-block" for="sex" style="font-size: 12px">
+                        [3] Giới tính (<span class="text-danger">*</span>)
+                    </label>
+                    <div class="form-check d-inline-block">
+                        <input class="form-check-input" type="radio" asp-for="Employee.Gender" value="@Gender.Male" id="flexRadioDefault1" />
+                        <label class="form-check-label" style="font-size: 12px" for="flexRadioDefault1">
+                            Nam
+                        </label>
+                    </div>
+                    <div class="form-check d-inline-block">
+                        <input class="form-check-input" type="radio" asp-for="Employee.Gender" value="@Gender.Female" id="flexRadioDefault2" />
+                        <label class="form-check-label" style="font-size: 12px" for="flexRadioDefault2">
+                            Nữ
+                        </label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <label for="occupation"
+                           class="mb-2"
+                           asp-for="Employee.OccupationId"
+                           style="font-size: 11px">[4] Nghề nghiệp(<span class="text-danger">*</span>)</label>
+                    <select class="form-select"
+                            asp-for="@Model.Employee.OccupationId"
+                            id="Occupation"
+                            style="font-size: 12px"
+                            aria-label=""
+                            asp-items="@Model.Occupations">
+                    </select>
+                    <span style="font-size: 12px" asp-validation-for="Employee.OccupationId" class="text-danger"></span>
+                </div>
+                <div class="col-3 mt-4">
+                    <label for=""
+                           class="mb-2"
+                           style="font-size: 11px">[5] Dân tộc (<span class="text-danger">*</span>)</label>
+                    <select asp-for="@Model.Employee.EthnicityId"
+                            class="form-select"
+                            style="font-size: 12px"
+                            asp-items="@Model.Ethnicity"
+                            id="Ethnicity"></select>
+                    <span style="font-size: 12px" asp-validation-for="Employee.EthnicityId" class="text-danger"></span>
+                </div>
+                <div class="col-3 mt-4">
+                    <label for="cmnd"
+                           class="mb-2"
+                           asp-for="Employee.IdentityCardNumber"
+                           style="font-size: 11px">
+                        [6]Số CMND/CCCD/Hộ Chiếu(<span class="text-danger">*</span>)
+                    </label>
+                    <input style="font-size: 11px"
+                           asp-for="Employee.IdentityCardNumber"
+                           class="form-control text-secondary fw-normal"
+                           type="text"
+                           id="cmnd2" />
+                    <div class="mb-3 form-check">
+                        <input type="checkbox"
+                               class="form-check-input"
+                               id="noIdentityCardNumberedit" />
+                        <label class="form-check-label"
+                               for="noIdentityCardNumberedit"
+                               style="font-size: 12px">Không có CMND</label>
+                    </div>
+                    <span style="font-size: 12px" asp-validation-for="Employee.IdentityCardNumber" class="text-danger indentity "></span>
+
+                </div>
+                <div class="col-3 mt-4">
+                    <label class="mb-2"
+                           asp-for="Employee.PhoneNumber"
+                           style="font-size: 11px"
+                           for="phone">[7]Số Điện thoại(<span class="text-danger">*</span>)</label>
+                    <input style="font-size: 11px"
+                           asp-for="Employee.PhoneNumber"
+                           class="form-control text-secondary fw-normal"
+                           type="number"
+                           id="phone2" />
+                    <div class="mb-3 form-check">
+                        <input type="checkbox"
+                               class="form-check-input"
+                               id="noPhoneNumberedit" />
+                        <label class="form-check-label"
+                               for="noPhoneNumberedit"
+                               style="font-size: 12px">Không có SĐT</label>
+                    </div>
+                    <span style="font-size: 12px" asp-validation-for="Employee.PhoneNumber" class="text-danger sđt "></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label for="city"
+                           class="form-label"
+                           style="font-size: 12px">Thành phố(<span class="text-danger">*</span>)</label>
+                    <select asp-for="@Model.Employee.CityId"
+                            class="form-select"
+                            style="font-size: 12px"
+                            asp-items="@Model.Citys"
+                            id="city"></select>
+                    <span style="font-size: 12px" asp-validation-for="Employee.CityId" class="text-danger"></span>
+                </div>
+                <div class="col-2">
+                    <label style="font-size: 12px"
+                           for="thon"
+                           class="form-label">Huyện</label>
+                    <select asp-for="@Model.Employee.DistrictId"
+                            class="form-select"
+                            style="font-size: 12px"
+                            id="district"
+                            asp-items="@Model.Districts">
+                        <option disabled>-- Chọn Huyện --</option>
+                    </select>
+                    <span style="font-size: 12px" asp-validation-for="Employee.DistrictId" class="text-danger"></span>
+                </div>
+                <div class="col-3">
+                    <label style="font-size: 12px"
+                           for="address"
+                           class="form-label">Địa chỉ cụ thể</label>
+                    <select asp-for="Employee.WardId"
+                            class="form-select"
+                            style="font-size: 12px"
+                            id="ward"
+                            asp-items="@Model.Wards">
+                        <option disabled>-- Chọn Xã --</option>
+                    </select>
+                    <span style="font-size: 12px" asp-validation-for="Employee.WardId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <a asp-controller="Employee" asp-action="Index" class="fw-bold mt-4 mb-3 mx-3 text-center text-black  text-decoration-none"
+               style="font-size: 14px ; cursor:pointer ">
+                <i class="bi fs-5 mt-5 bi-chevron-left"></i> Danh sách Employee
+            </a>
+            <div style="margin-right: 10px">
+                <a style="background-color: #3598dc; border: none; font-size: 11px"
+                   class="rounded-1 px-3 py-1 btn  text-light fw-medium">
+                    << Quay lại
+                </a>
+                <button style="background-color: #3598dc; border: none; font-size: 11px"
+                        class="rounded-1 px-3 py-1 text-light fw-medium" type="submit">
+                    Lưu và tiếp tục
+                </button>
+            </div>
+        </div>
+    </form>
+</section>
+
+<script>
+    $(document).ready(function () {
+        var selectCity = $("#city");
+        var selectWard = $("#ward");
+        var dateOfBirthInput = $("#DateOfBirth");
+        var selectDistrict = $("#district");
+        var ageInput = $("#age");
+
+        dateOfBirthInput.change(function () {
+            var dayNow = new Date();
+            var dateOfBirthArray = $(this).val().split('-');
+            var thangSinh = parseInt(dateOfBirthArray[1]) - 1;
+            var ngaySinh = parseInt(dateOfBirthArray[2]);
+
+            var age = dayNow.getFullYear() - parseInt(dateOfBirthArray[0]);
+
+            if (thangSinh > dayNow.getMonth() || (thangSinh === dayNow.getMonth() && ngaySinh > dayNow.getDate())) {
+                age--;
+            }
+            ageInput.val(age);
+        })
+
+        selectCity.change(function () {
+            fnDitrictList($(this).val());
+            selectWard.empty();
+            selectWard.append(`<option  >-- Chọn Xã --</option>`);
+        });
+
+        function fnDitrictList(id) {
+            $.ajax({
+                url: `/api/city/districts/${id}`,
+                method: "GET",
+                dataType: "json",
+                success: function ({ data }) {
+                    selectDistrict.empty();
+                    selectDistrict.append(`<option  >-- Chọn Huyện --</option>`);
+                    $.each(data, function (index, district) {
+                        selectDistrict.append(`<option value="${district.districtId}">${district.districtName}</option>`);
+                    });
+                    selectDistrict.change(function () {
+                        fnWardList($(this).val())
+                    })
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi nếu có
+                    console.log("Error:", error);
+                }
+            });
+        }
+        function fnWardList(id) {
+            $.ajax({
+                url: `/api/district/ward/${id}`,
+                method: "GET",
+                dataType: "json",
+                success: function ({ data }) {
+                    selectWard.empty();
+                    selectWard.append(`<option  >-- Chọn Xã --</option>`);
+                    $.each(data, function (index, ward) {
+                        selectWard.append(`<option value="${ward.wardId}">${ward.wardName}</option>`);
+                    });
+
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi nếu có
+                    console.log("Error:", error);
+                }
+            });
+        }
+        $('#noIdentityCardNumberedit').change(function () {
+            if ($(this).is(':checked')) {
+                $(".indentity").html("");
+                $('#cmnd2').val("");
+                $('#cmnd2').attr("disabled", true);
+                $('#cmnd2').removeAttr('data-val')
+                    .removeAttr('name')
+                    .removeAttr('data-val-required')
+            } else {
+                $('#cmnd2').attr("disabled", false);
+                $('#cmnd2').attr('data-val', 'true')
+                    .attr('name', 'Employee.IdentityCardNumber')
+                    .attr('data-val-required', 'Vui lòng nhập CCCD/CMND');
+            }
+        });
+        $('#noPhoneNumberedit').change(function () {
+            if ($(this).is(':checked')) {
+                $(".sđt").html("");
+                $('#phone2').val("");
+                $('#phone2').attr("disabled", true);
+                $('#phone2').attr("disabled", true);
+                $('#phone2').removeAttr('data-val')
+                    .removeAttr('name')
+                    .removeAttr('data-val-required')
+            } else {
+                $('#phone2').attr("disabled", false);
+                $('#phone2').attr('data-val', 'true')
+                    .attr('name', 'Employee.PhoneNumber')
+                    .attr('data-val-required', 'Vui lòng nhập số điện thoại');
+            }
+        });
+        if($('#cmnd2').val()==""){
+            $('#noIdentityCardNumberedit').prop('checked', true);
+            $('#cmnd2').attr("disabled", true);
+        }
+        if ($('#phone2').val() == "") {
+            $('#noPhoneNumberedit').prop('checked', true);
+            $('#phone2').attr("disabled", true);
+        }
+        $('#cmnd2').attr('data-val-length', 'CCCD/CMND phải có 9 kí tự.')
+            .attr('data-val-length-max', '12')
+            .attr('data-val-length-min', '12')
+            .attr('maxlength', '12')
+            .attr('data-val-regex', '^[0-9]*$')
+            .attr('data-val', 'true')
+            .attr('data-val-required', 'Vui lòng nhập CCCD/CMND');
+        $('#phone2').attr('data-val-length', 'Số điện thoại phải gồm 10 số.')
+            .attr('data-val-length-max', '10')
+            .attr('data-val', 'true')
+            .attr('data-val-required', 'Vui lòng nhập số điện thoại ')
+            .attr('data-val-length-min', '10')
+            .attr('maxlength', '10')
+            .attr('data-val-regex', '^\d{10,11}$')
+    });
+
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+

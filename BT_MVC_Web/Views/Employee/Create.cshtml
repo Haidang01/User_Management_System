@@ -1,0 +1,444 @@
+﻿@using BT_MVC_Web.Enums;
+@model BT_MVC_Web.DTOs.NewEmployeeDto
+
+@{
+    ViewData["Title"] = "Create Employee";
+}
+<section class="border border-secondary px-1 pb-2 pt-2 rounded-1 m-2">
+    <form method="post">
+        @*<div asp-validation-summary="All"></div>*@
+
+        <span class="fw-bold mx-2"
+              style="font-size: 12px">MÃ SỐ TRƯỜNG HỢP BỆNH NHÂN</span>
+        <div style="min-height:50vh;" class="p-3 border-primary border mt-4 mx-2 rounded">
+            <div class="row">
+                <div class="col-3">
+                    <label for="fullname"
+                           asp-for="Name"
+                           class="form-label"
+                           style="font-size: 12px">
+                        [1] Họ và tên bệnh nhân(<span class="text-danger">*</span>)
+                    </label>
+                    <input style="font-size: 12px"
+                           asp-for="Name"
+                           class="form-control text-secondary fw-normal"
+                           type="text"
+                           id="fullname" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col-3 d-flex pl-3 justify-content-between  gap-1">
+                    <div class="col-7">
+                        <label for="DateOfBirth"
+                               asp-for="DateOfBirth"
+                               style="font-size: 12px"
+                               class="form-label">[2] Ngày sinh (<span class="text-danger">*</span>)</label>
+                        <input class="form-control"
+                               asp-for="DateOfBirth"
+                               type="date"
+                               style="font-size: 12px"
+                               id="DateOfBirth" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label"
+                               for="age"
+                               style="font-size: 12px">Tuổi</label>
+                        <input style="font-size: 12px; background-color: #f2f2f2;pointer-events: none;"
+                               readonly
+                               asp-for="age"
+                               type="number"
+                               class="form-control text-secondary fw-normal"
+                               id="age" />
+                        <span asp-validation-for="age" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="col-3">
+                    <label class="form-label d-block" for="sex" style="font-size: 12px">
+                        [3] Giới tính (<span class="text-danger">*</span>)
+                    </label>
+                    <div class="form-check d-inline-block">
+                        <input class="form-check-input" type="radio" checked asp-for="Gender" value="@Gender.Male" id="flexRadioDefault1" />
+                        <label class="form-check-label" style="font-size: 12px" for="flexRadioDefault1">
+                            Nam
+                        </label>
+                    </div>
+                    <div class="form-check d-inline-block">
+                        <input class="form-check-input" type="radio" asp-for="Gender" value="@Gender.Female" id="flexRadioDefault2" />
+                        <label class="form-check-label" style="font-size: 12px" for="flexRadioDefault2">
+                            Nữ
+                        </label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <label for="occupation"
+                           class="mb-2"
+                           asp-for="Occupation"
+                           style="font-size: 11px">[4] Nghề nghiệp(<span class="text-danger">*</span>)</label>
+                    <select class="form-select"
+                            asp-for="OccupationId"
+                            id="Occupation"
+                            style="font-size: 12px"
+                            aria-label="">
+                    </select>
+                    <span asp-validation-for="OccupationId" class="text-danger"></span>
+                </div>
+                <div class="col-3 mt-4">
+                    <label for=""
+                           class="mb-2"
+                           style="font-size: 11px">[5] Dân tộc (<span class="text-danger">*</span>)</label>
+                    <select asp-for="EthnicityId"
+                            class="form-select"
+                            style="font-size: 12px"
+                            id="Ethnicity"></select>
+                    <span asp-validation-for="EthnicityId" class="text-danger"></span>
+                </div>
+                <div class="col-3 mt-4">
+                    <label for="cmnd"
+                           class="mb-2"
+                           asp-for="IdentityCardNumber"
+                           style="font-size: 11px">
+                        [6]Số CMND/CCCD/Hộ Chiếu(<span class="text-danger">*</span>)
+                    </label>
+                    <input style="font-size: 11px"
+                           asp-for="IdentityCardNumber"
+                           class="form-control text-secondary fw-normal"
+                           type="text"
+                           id="cmnd" />
+                    <div class="mb-3 form-check">
+                        <input type="checkbox"
+                               asp-for="NoIdentityCardNumber"
+                               class="form-check-input"
+                               id="noIdentityCardNumber" />
+                        <label class="form-check-label"
+                               for="noIdentityCardNumber"
+                               style="font-size: 12px">Không có CMND</label>
+                    </div>
+                    <span asp-validation-for="IdentityCardNumber" class="text-danger indentity"></span>
+
+                </div>
+                <div class="col-3 mt-4">
+                    <label class="mb-2"
+                           asp-for="PhoneNumber"
+                           style="font-size: 11px"
+                           for="phone">[7]Số Điện thoại(<span class="text-danger">*</span>)</label>
+                    <input style="font-size: 11px"
+                           asp-for="PhoneNumber"
+                           class="form-control text-secondary fw-normal"
+                           type="number"
+                           id="phone" />
+                    <div class="mb-3 form-check">
+                        <input type="checkbox"
+                               asp-for="NoPhoneNumber"
+                               class="form-check-input"
+                               id="noPhoneNumber" />
+                        <label class="form-check-label"
+                               for="noPhoneNumber"
+                               style="font-size: 12px">Không có SĐT</label>
+                    </div>
+                    <span asp-validation-for="PhoneNumber" class="text-danger sđt "></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label for="city"
+                           class="form-label"
+                           style="font-size: 12px">Thành phố(<span class="text-danger">*</span>)</label>
+                    <select asp-for="CityId"
+                            class="form-select"
+                            style="font-size: 12px"
+                            id="city"></select>
+                    <span asp-validation-for="CityId" class="text-danger"></span>
+                </div>
+                <div class="col-2">
+                    <label style="font-size: 12px"
+                           for="thon"
+                           class="form-label">Huyện</label>
+                    <select asp-for="DistrictId"
+                            class="form-select"
+                            style="font-size: 12px"
+                            id="district">
+                        <option value="">-- Chọn Huyện --</option>
+                    </select>
+                    <span asp-validation-for="DistrictId" class="text-danger"></span>
+                </div>
+                <div class="col-3">
+                    <label style="font-size: 12px"
+                           for="address"
+                           class="form-label">Địa chỉ cụ thể</label>
+                    <select asp-for="WardId"
+                            class="form-select"
+                            style="font-size: 12px"
+                            id="ward">
+                        <option value="">-- Chọn Xã --</option>
+                    </select>
+                    <span asp-validation-for="WardId" class="text-danger"></span>
+                </div>
+            </div>
+            <input class="form-control"
+                   asp-for="DistrictId"
+                   type="number"
+                   hidden
+                   id="DistrictId" />
+            <input class="form-control"
+                   asp-for="CityId"
+                   type="number"
+                   hidden
+                   id="CityId" />
+            <input class="form-control"
+                   asp-for="WardId"
+                   hidden
+                   type="number"
+                   id="WardId" />
+            <input class="form-control"
+                   asp-for="OccupationId"
+                   hidden
+                   type="number"
+                   id="OccupationId" />
+            <input class="form-control"
+                   asp-for="EthnicityId"
+                   hidden
+                   type="number"
+                   id="EthnicityId" />
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <a asp-controller="Employee" asp-action="Index" class="fw-bold mt-4 mb-3 mx-3 text-center text-black  text-decoration-none"
+               style="font-size: 14px ; cursor:pointer ">
+                <i class="bi fs-5 mt-5 bi-chevron-left"></i> Danh sách Employee
+            </a>
+            <div style="margin-right: 10px">
+                <a style="background-color: #3598dc; border: none; font-size: 11px"
+                   class="rounded-1 px-3 py-1 btn  text-light fw-medium">
+                    << Quay lại
+                </a>
+                <button style="background-color: #3598dc; border: none; font-size: 11px"
+                        class="rounded-1 px-3 py-1 text-light fw-medium" type="submit">
+                    Lưu và tiếp tục
+                </button>
+            </div>
+        </div>
+    </form>
+</section>
+
+<script>
+    $(document).ready(function () {
+        var selectCity = $("#city");
+        var selectWard = $("#ward");
+        var selectEthnicity = $("#Ethnicity");
+        var selectOccupation = $("#Occupation");
+        var dateOfBirthInput = $("#DateOfBirth");
+        var selectDistrict = $("#district");
+        var ageInput = $("#age");
+        selectCity.empty();
+        selectEthnicity.empty();
+        selectOccupation.empty();
+
+
+        dateOfBirthInput.change(function () {
+            var dayNow = new Date();
+            var dateOfBirthArray = $(this).val().split('-');
+            var thangSinh = parseInt(dateOfBirthArray[1]) - 1;
+            var ngaySinh = parseInt(dateOfBirthArray[2]);
+
+            var age = dayNow.getFullYear() - parseInt(dateOfBirthArray[0]);
+
+            if (thangSinh > dayNow.getMonth() || (thangSinh === dayNow.getMonth() && ngaySinh > dayNow.getDate())) {
+                age--;
+            }
+            ageInput.val(age);
+        })
+
+        function fnCityList() {
+
+            $.ajax({
+                url: "/api/city",
+                method: "GET",
+                dataType: "json",
+                success: function ({ data }) {
+                    selectCity.append(`<option value="">-- Chọn thành phố --</option>`);
+                    $.each(data.data, function (index, city) {
+                        if ($("#CityId").val() == city.cityId) {
+                            selectCity.append(`<option selected value="${city.cityId}">${city.cityName}</option>`);
+
+                        } else {
+                            selectCity.append(`<option value="${city.cityId}">${city.cityName}</option>`);
+                        }
+                    });
+                    selectCity.change(function () {
+                        fnDitrictList($(this).val());
+                        selectWard.empty();
+                        selectWard.append(`<option value="">-- Chọn Xã --</option>`);
+                    });
+
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi nếu có
+                    console.log("Error:", error);
+                }
+            })
+        }
+        function fnEthnicityList() {
+            $.ajax({
+                url: "/api/Ethnicity",
+                method: "GET",
+                dataType: "json",
+                success: function ({ data }) {
+                    selectEthnicity.append(`<option value="">-- Chọn Dân tộc --</option>`);
+                    $.each(data.data, function (index, ethnicity) {
+                        if ($("#EthnicityId").val() == ethnicity.ethnicityId) {
+                            selectEthnicity.append(`<option selected value="${ethnicity.ethnicityId}">${ethnicity.ethnicityName}</option>`);
+                        } else {
+                            selectEthnicity.append(`<option value="${ethnicity.ethnicityId}">${ethnicity.ethnicityName}</option>`);
+                        }
+                    });
+
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi nếu có
+                    console.log("Error:", error);
+                }
+            });
+        }
+        function fnOccupationList() {
+            $.ajax({
+                url: "/api/Occupation",
+                method: "GET",
+                dataType: "json",
+                success: function ({ data }) {
+                    selectOccupation.append(`<option value="">[--- Nghề nghiệp ---]</option>`);
+                    $.each(data.data, function (index, occupation) {
+                        if ($("#OccupationId").val() == occupation.occupationId) {
+                            selectOccupation.append(`<option selected value="${occupation.occupationId}">${occupation.occupationName}</option>`);
+                        } else {
+                            selectOccupation.append(`<option value="${occupation.occupationId}">${occupation.occupationName}</option>`);
+                        }
+                    });
+
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi nếu có
+                    console.log("Error:", error);
+                }
+            });
+        }
+
+        function fnDitrictList(id) {
+            $.ajax({
+                url: `/api/city/districts/${id}`,
+                method: "GET",
+                dataType: "json",
+                success: function ({ data }) {
+                    selectDistrict.empty();
+                    selectDistrict.append(`<option value="">-- Chọn Huyện --</option>`);
+                    $.each(data, function (index, district) {
+                        if ($("#DistrictId").val() == district.districtId) {
+                            selectDistrict.append(`<option selected value="${district.districtId}">${district.districtName}</option>`);
+                        } else {
+                            selectDistrict.append(`<option value="${district.districtId}">${district.districtName}</option>`);
+                        }
+                    });
+                    selectDistrict.change(function () {
+                        fnWardList($(this).val())
+                    })
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi nếu có
+                    console.log("Error:", error);
+                }
+            });
+        }
+        function fnWardList(id) {
+            $.ajax({
+                url: `/api/district/ward/${id}`,
+                method: "GET",
+                dataType: "json",
+                success: function ({ data }) {
+                    selectWard.empty();
+                    selectWard.append(`<option value="">-- Chọn Xã --</option>`);
+                    $.each(data, function (index, ward) {
+                        if ($("#WardId").val() == ward.wardId) {
+                            selectWard.append(`<option selected value="${ward.wardId}">${ward.wardName}</option>`);
+                        } else {
+                            selectWard.append(`<option value="${ward.wardId}">${ward.wardName}</option>`);
+                        }
+                    });
+
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi nếu có
+                    console.log("Error:", error);
+                }
+            });
+        }
+        fnOccupationList();
+        fnEthnicityList();
+        fnCityList();
+        if ($("#EthnicityId").val()) {
+            fnDitrictList($("#CityId").val());
+            fnWardList($("#DistrictId").val());
+        }
+        $('#noIdentityCardNumber').change(function () {
+            if ($(this).is(':checked')) {
+                $(".indentity").html("");
+                $('#cmnd').val("");
+                $('#cmnd').attr("disabled", true);
+                $('#cmnd').removeAttr('data-val')
+                    .removeAttr('name')
+                    .removeAttr('data-val-required')
+            } else {
+                $('#cmnd').attr("disabled", false);
+                $('#cmnd').attr('data-val', 'true')
+                    .attr('name', 'Employee.IdentityCardNumber')
+                    .attr('data-val-required', 'Vui lòng nhập CCCD/CMND');
+            }
+        });
+        $('#noPhoneNumber').change(function () {
+            if ($(this).is(':checked')) {
+                $(".sđt").html("");
+                $('#phone').val("");
+                $('#phone').attr("disabled", true);
+                $('#phone').removeAttr('data-val')
+                    .removeAttr('name')
+                    .removeAttr('data-val-required')
+            } else {
+                $('#phone').attr("disabled", false);
+                $('#phone').attr('data-val', 'true')
+                    .attr('name', 'Employee.PhoneNumber')
+                    .attr('data-val-required', 'Vui lòng nhập số điện thoại');
+            }
+        });
+        if ($('#cmnd').val() == "" && Model.NoIdentityCardNumber== true) {
+            $('#noIdentityCardNumber').prop('checked', true);
+            $('#cmnd').attr("disabled", true);
+        }
+        if ($('#phone').val() == "" && Model.NoPhoneNumber== true) {
+            $('#noPhoneNumber').prop('checked', true);
+            $('#phone').attr("disabled", true);
+        }
+        $('#cmnd').attr('data-val-length', 'CCCD/CMND phải có 9 kí tự.')
+            .attr('data-val-length-max', '12')
+            .attr('data-val-length-min', '12')
+            .attr('maxlength', '12')
+            .attr('data-val-regex', '^[0-9]*$')
+            .attr('data-val', 'true')
+            .attr('data-val-required', 'Vui lòng nhập CCCD/CMND');
+        $('#phone').attr('data-val-length', 'Số điện thoại phải gồm 10 số.')
+            .attr('data-val-length-max', '10')
+            .attr('data-val', 'true')
+            .attr('data-val-required', 'Vui lòng nhập số điện thoại ')
+            .attr('data-val-length-min', '10')
+            .attr('maxlength', '10')
+            .attr('data-val-regex', '^\d{10,11}$')
+    });
+
+</script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+@*<div class="form-group">
+    <label asp-for="WardId" class="control-label"></label>
+    <select asp-for="WardId" class="form-control" asp-items="ViewBag.WardId"></select>
+</div>*@
+
