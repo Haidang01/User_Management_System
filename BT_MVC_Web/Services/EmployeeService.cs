@@ -43,9 +43,9 @@ namespace BT_MVC_Web.Services
             return _unitOfWork.Employee.FindById(id);
         }
 
-        public async Task<IEnumerable<Employee>> GetAllEmployeeAsync(string? includeProperties = null)
+        public async Task<IEnumerable<Employee>> GetAllEmployeeAsync(int page, int pageSize, string? includeProperties = null)
         {
-            return await _unitOfWork.Employee.GetAllAsync(includeProperties);
+            return await _unitOfWork.Employee.GetAllAsync(page, pageSize, includeProperties);
         }
 
         public async Task<Employee> GetEmployeeAsync(Expression<Func<Employee, bool>> filter, string? includeProperties = null)
@@ -63,11 +63,11 @@ namespace BT_MVC_Web.Services
         {
             var IdentityCardNumberExists = _unitOfWork.Employee.Get(e => e.IdentityCardNumber == obj.IdentityCardNumber);
             var PhoneNumberExists = _unitOfWork.Employee.Get(e => e.PhoneNumber == obj.PhoneNumber);
-            if (obj.IdentityCardNumber != null && IdentityCardNumberExists != null&& IdentityCardNumberExists.Id!=obj.Id)
+            if (obj.IdentityCardNumber != null && IdentityCardNumberExists != null && IdentityCardNumberExists.Id != obj.Id)
             {
                 throw new Exception("CCCD/CMND đã tồn tại!");
             }
-            if (obj.PhoneNumber != null && PhoneNumberExists != null&&PhoneNumberExists.Id!=obj.Id)
+            if (obj.PhoneNumber != null && PhoneNumberExists != null && PhoneNumberExists.Id != obj.Id)
             {
                 throw new Exception("Số điện thoại đã tồn tại!");
             }

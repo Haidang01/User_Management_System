@@ -20,9 +20,9 @@ namespace BT_MVC_Web.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<Ward>> GetAllWardsAsync(string? includeProperties = null)
+        public async Task<IEnumerable<Ward>> GetAllWardsAsync(int page, int pageSize, string? includeProperties = null)
         {
-            return await _unitOfWork.Ward.GetAllAsync(includeProperties);
+            return await _unitOfWork.Ward.GetAllAsync(page, pageSize, includeProperties);
         }
 
         public async Task<Ward> GetWardAsync(Expression<Func<Ward, bool>> filter, string? includeProperties = null)

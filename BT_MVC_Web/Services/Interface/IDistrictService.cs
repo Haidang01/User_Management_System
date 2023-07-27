@@ -6,7 +6,7 @@ namespace BT_MVC_Web.Services.Interface
 {
     public interface IDistrictService
     {
-        Task<IEnumerable<District>> GetAllDistrictsAsync(string? includeProperties = null);
+        Task<IEnumerable<District>> GetAllDistrictsAsync(int page, int pageSize, string? includeProperties = null);
         Task<District>? GetDistrictAsync(Expression<Func<District, bool>> filter, string? includeProperties = null);
         Task AddDistrictAsync(DistrictCreatDto district);
         Task UpdateDistrictAsync(District district);

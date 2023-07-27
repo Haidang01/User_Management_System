@@ -5,7 +5,7 @@ namespace BT_MVC_Web.Repositories.Interface
 {
     public interface IRepository<T> where T : class
     {
-        Task<IEnumerable<T>> GetAllAsync(string? includeProperties = null);
+        Task<IEnumerable<T>> GetAllAsync(int page, int pageSize, string? includeProperties = null);
         IEnumerable<T> GetAll(string? includeProperties = null);
         Task<T> GetAsync(Expression<Func<T, bool>> filter, string? includeProperties = null);
         T Get(Expression<Func<T, bool>> filter, string? includeProperties = null);

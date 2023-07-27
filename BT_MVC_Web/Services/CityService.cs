@@ -16,14 +16,13 @@ namespace BT_MVC_Web.Services
 
         public async Task AddCityAsync(City city)
         {
-            /*var result = _unitOfWork.City.AddAsync(city);*/
             await _unitOfWork.City.AddAsync(city);
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<City>> GetAllCitiesAsync(string? includeProperties = null)
+        public async Task<IEnumerable<City>> GetAllCitiesAsync(int page, int pageSize, string? includeProperties = null)
         {
-            return await _unitOfWork.City.GetAllAsync(includeProperties);
+            return await _unitOfWork.City.GetAllAsync(page, pageSize, includeProperties);
         }
 
         public async Task<City> GetCityAsync(Expression<Func<City, bool>> filter, string? includeProperties = null)

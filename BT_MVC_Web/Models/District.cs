@@ -10,6 +10,7 @@ namespace BT_MVC_Web.Models
         [Key]
         public int DistrictId { get; set; }
 
+        [MaxLength(30, ErrorMessage = "Tên phải dưới 30 kí tự!")]
         [Required(ErrorMessage = "Vui lòng nhập tên huyện.")]
         [Display(Name = "Tên huyện")]
         public string DistrictName { get; set; }

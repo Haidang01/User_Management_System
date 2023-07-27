@@ -5,7 +5,7 @@ namespace BT_MVC_Web.Services.Interface
 {
     public interface IOccupationService
     {
-        Task<IEnumerable<Occupation>> GetAllOccupationsAsync(string? includeProperties = null);
+        Task<IEnumerable<Occupation>> GetAllOccupationsAsync(int page, int pageSize, string? includeProperties = null);
         Task<Occupation>? GetOccupationAsync(Expression<Func<Occupation, bool>> filter, string? includeProperties = null);
         Task AddOccupationAsync(Occupation occupation);
         Task UpdateOccupationAsync(Occupation occupation);

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BT_MVC_Web.Constants;
 using BT_MVC_Web.DTOs;
 using BT_MVC_Web.Helpers;
 using BT_MVC_Web.Models;
@@ -31,11 +32,11 @@ namespace BT_MVC_Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEthnicitys(int page = 1, int pageSize = 3)
+        public async Task<IActionResult> GetEthnicitys(int page = AppConstrants.PAGE_DEFAULT, int pageSize = AppConstrants.PAGE_SIZE_DEFAULT)
         {
             try
             {
-                var ethnicities = await _ethnicityService.GetAllEthnicityAsync();
+                var ethnicities = await _ethnicityService.GetAllEthnicityAsync(page, pageSize);
 
                 var ethnicitiesGet = _mapper.Map<List<EthnicityGetDto>>(ethnicities);
 
@@ -76,13 +77,6 @@ namespace BT_MVC_Web.Controllers
             {
                 try
                 {
-                    var existsEthnicity = await _ethnicityService.GetAllEthnicityAsync();
-
-                    if (existsEthnicity.Any(e => e.EthnicityName == obj.EthnicityName))
-                    {
-                        return CustomResult("The Ethnicity has existed!", HttpStatusCode.BadRequest);
-                    }
-
                     await _ethnicityService.AddEthnicityAsync(obj);
 
                     return CustomResult(HttpStatusCode.Created);

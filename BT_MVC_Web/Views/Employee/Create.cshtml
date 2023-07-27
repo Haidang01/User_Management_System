@@ -407,11 +407,11 @@
                     .attr('data-val-required', 'Vui lòng nhập số điện thoại');
             }
         });
-        if ($('#cmnd').val() == "" && Model.NoIdentityCardNumber== true) {
+        if ($('#cmnd').val() == null && Model.NoIdentityCardNumber== true) {
             $('#noIdentityCardNumber').prop('checked', true);
             $('#cmnd').attr("disabled", true);
         }
-        if ($('#phone').val() == "" && Model.NoPhoneNumber== true) {
+        if ($('#phone').val() == null && Model.NoPhoneNumber== true) {
             $('#noPhoneNumber').prop('checked', true);
             $('#phone').attr("disabled", true);
         }

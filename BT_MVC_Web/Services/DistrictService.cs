@@ -12,7 +12,7 @@ namespace BT_MVC_Web.Services
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public DistrictService(IUnitOfWork unitOfWork,IMapper mapper)
+        public DistrictService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -25,9 +25,9 @@ namespace BT_MVC_Web.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<District>> GetAllDistrictsAsync(string? includeProperties = null)
+        public async Task<IEnumerable<District>> GetAllDistrictsAsync(int page, int pageSize, string? includeProperties = null)
         {
-            return await _unitOfWork.District.GetAllAsync(includeProperties);
+            return await _unitOfWork.District.GetAllAsync(page, pageSize, includeProperties);
         }
 
         public async Task<District> GetDistrictAsync(Expression<Func<District, bool>> filter, string? includeProperties = null)

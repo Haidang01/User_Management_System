@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BT_MVC_Web.Constants;
 using BT_MVC_Web.DTOs;
 using BT_MVC_Web.Helpers;
 using BT_MVC_Web.Models;
@@ -26,11 +27,11 @@ namespace BT_MVC_Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCities(int page = 1, int pageSize = 3)
+        public async Task<IActionResult> GetCities(int page = AppConstrants.PAGE_DEFAULT, int pageSize = AppConstrants.PAGE_SIZE_DEFAULT)
         {
             try
             {
-                var cities = await _cityService.GetAllCitiesAsync();
+                var cities = await _cityService.GetAllCitiesAsync(page, pageSize);
 
                 var citiesGet = _mapper.Map<List<CityGetDto>>(cities);
 
@@ -46,7 +47,7 @@ namespace BT_MVC_Web.Controllers
         }
 
         [HttpGet("districts/{id:int}")]
-        public async Task<IActionResult> GetAllDistrictByCityId([FromRoute] int id)
+        public async Task<IActionResult> GetAllDistrictByCityId(int id)
         {
             try
             {
@@ -82,18 +83,12 @@ namespace BT_MVC_Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCity([FromBody] City city)
+        public async Task<IActionResult> CreateCity(City city)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var existsCity = await _cityService.GetAllCitiesAsync();
-                    if (existsCity.Any(c => c.CityName == city.CityName))
-                    {
-                        return CustomResult("The city has existed!", HttpStatusCode.BadRequest);
-                    }
-
                     await _cityService.AddCityAsync(city);
 
                     return CustomResult(HttpStatusCode.Created);

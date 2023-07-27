@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BT_MVC_Web.Constants;
 using BT_MVC_Web.DTOs;
 using BT_MVC_Web.Helpers;
 using BT_MVC_Web.Models;
@@ -29,11 +30,11 @@ namespace BT_MVC_Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetDistricts(int page = 1, int pageSize = 3)
+        public async Task<IActionResult> GetDistricts(int page = AppConstrants.PAGE_DEFAULT, int pageSize = AppConstrants.PAGE_SIZE_DEFAULT)
         {
             try
             {
-                var districts = await _districtService.GetAllDistrictsAsync("City,Wards");
+                var districts = await _districtService.GetAllDistrictsAsync(page, pageSize, "City,Wards");
 
                 var districtsGet = _mapper.Map<List<DistrictGetDto>>(districts);
 
@@ -73,12 +74,6 @@ namespace BT_MVC_Web.Controllers
             {
                 try
                 {
-                    var existsDistrict = await _districtService.GetAllDistrictsAsync();
-
-                    if (existsDistrict.Any(d => d.DistrictName == obj.DistrictName))
-                    {
-                        return CustomResult("The district has existed!", HttpStatusCode.BadRequest);
-                    }
                     var city = await _cityService.GetCityAsync(c => c.CityId == obj.CityId);
 
                     if (city == null)

@@ -1,18 +1,14 @@
-﻿using BT_MVC_Web.Data_Access;
+﻿using BT_MVC_Web.Constants;
+using BT_MVC_Web.Data_Access;
 using BT_MVC_Web.DTOs;
 using BT_MVC_Web.Helpers;
 using BT_MVC_Web.Models;
-using BT_MVC_Web.Repositories;
 using BT_MVC_Web.Repositories.Interface;
-using BT_MVC_Web.Services;
 using BT_MVC_Web.Services.Interface;
-using BT_MVC_Web.ViewModels;
-using Microsoft.AspNetCore.Hosting;
+using Castle.Components.DictionaryAdapter.Xml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using OfficeOpenXml;
-using System.Drawing.Printing;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Net;
 
 namespace BT_MVC_Web.Controllers
 {
@@ -136,7 +132,7 @@ namespace BT_MVC_Web.Controllers
                     _employeeService.UpdateEmployee(employeeVM.Employee);
 
                     TempData["success"] = "Employee updated successfully";
-                    
+
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
@@ -175,39 +171,63 @@ namespace BT_MVC_Web.Controllers
                 Text = w.WardName,
                 Value = w.WardId.ToString()
             });
-            return View("Edit",employeeVM);
+            return View("Edit", employeeVM);
         }
 
         #region API CALLS
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int page = AppConstrants.PAGE_DEFAULT, int pageSize = AppConstrants.PAGE_SIZE_DEFAULT)
         {
-            var objList = await _employeeService.GetAllEmployeeAsync("Ethnicity,Occupation,District,Ward,City");
-            return Json(new
+            try{
+                var objList = await _employeeService.GetAllEmployeeAsync(page, pageSize, "Ethnicity,Occupation,District,Ward,City");
+                return Json(new
+                {
+                    status = HttpStatusCode.OK,
+                    data = objList,
+                });
+            }
+            catch(Exception ex)
             {
-                data = objList,
-            });
+                return Json(new
+                {
+                    status= HttpStatusCode.InternalServerError,
+                    message = ex.Message,
+                });
+
+            }
         }
 
         [HttpDelete("/employee/{id:int}")]
         public IActionResult Delete(int id)
         {
-            var employeeToBeDelete = _unitOfWork.Employee.Get(u => u.Id == id);
-            if (employeeToBeDelete == null)
+            try
+            {
+                var employeeToBeDelete = _unitOfWork.Employee.Get(u => u.Id == id);
+                if (employeeToBeDelete == null)
+                {
+                    return Json(new
+                    {
+                        status = HttpStatusCode.NotFound,
+                        message = "Error while Deleting"
+                    });
+                }
+                _unitOfWork.Employee.Remove(employeeToBeDelete);
+                _unitOfWork.Save();
+                return Json(new
+                {
+                    status = HttpStatusCode.OK,
+                    message = "Delete successful"
+                });
+            }
+            catch (Exception ex)
             {
                 return Json(new
                 {
-                    success = false,
-                    message = "Error while Deleting"
+                    status = HttpStatusCode.InternalServerError,
+                    message = ex.Message,
                 });
+
             }
-            _unitOfWork.Employee.Remove(employeeToBeDelete);
-            _unitOfWork.Save();
-            return Json(new
-            {
-                success = false,
-                message = "Delete successful"
-            });
         }
         #endregion
 

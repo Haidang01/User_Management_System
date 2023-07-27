@@ -21,7 +21,7 @@ namespace BT_MVC_Web.Repositories
         {
             await dbSet.AddRangeAsync(entities);
         }
-        public async Task<IEnumerable<T>> GetAllAsync(string? includeProperties = null)
+        public async Task<IEnumerable<T>> GetAllAsync(int page, int pageSize, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
             if (!string.IsNullOrEmpty(includeProperties))
@@ -30,6 +30,10 @@ namespace BT_MVC_Web.Repositories
                 {
                     query = query.Include(property);
                 }
+            }
+            if (page != null && pageSize != null)
+            {
+                return await query.Take(pageSize).Skip((page - 1) * pageSize).ToListAsync();
             }
             return await query.ToListAsync();
         }

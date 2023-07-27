@@ -21,9 +21,9 @@ namespace BT_MVC_Web.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<Ethnicity>> GetAllEthnicityAsync(string? includeProperties = null)
+        public async Task<IEnumerable<Ethnicity>> GetAllEthnicityAsync(int page, int pageSize, string? includeProperties = null)
         {
-            return await _unitOfWork.Ethnicity.GetAllAsync(includeProperties);
+            return await _unitOfWork.Ethnicity.GetAllAsync(page, pageSize, includeProperties);
         }
 
         public async Task<Ethnicity> GetEthnicityAsync(Expression<Func<Ethnicity, bool>> filter, string? includeProperties = null)

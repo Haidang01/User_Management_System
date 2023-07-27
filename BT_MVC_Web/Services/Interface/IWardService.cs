@@ -5,7 +5,7 @@ namespace BT_MVC_Web.Services.Interface
 {
     public interface IWardService
     {
-        Task<IEnumerable<Ward>> GetAllWardsAsync(string? includeProperties = null);
+        Task<IEnumerable<Ward>> GetAllWardsAsync(int page, int pageSize, string? includeProperties = null);
         Task<Ward>? GetWardAsync(Expression<Func<Ward, bool>> filter, string? includeProperties = null);
         Task AddWardAsync(Ward ward);
         Task UpdateWardAsync(Ward ward);

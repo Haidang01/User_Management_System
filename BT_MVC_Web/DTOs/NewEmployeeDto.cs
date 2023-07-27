@@ -39,8 +39,8 @@ namespace BT_MVC_Web.DTOs
         [Display(Name = "Phone Number ")]
         public string? PhoneNumber { get; set; }
 
-        public bool NoIdentityCardNumber { get; set; }
-        public bool NoPhoneNumber { get; set; }
+        public bool NoIdentityCardNumber { get; set; }= false;
+        public bool NoPhoneNumber { get; set; } = false;
 
 
         // navigate proprety

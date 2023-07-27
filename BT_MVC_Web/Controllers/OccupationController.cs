@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BT_MVC_Web.Constants;
 using BT_MVC_Web.DTOs;
 using BT_MVC_Web.Helpers;
 using BT_MVC_Web.Models;
@@ -29,11 +30,11 @@ namespace BT_MVC_Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetOccupations(int page = 1, int pageSize = 3)
+        public async Task<IActionResult> GetOccupations(int page = AppConstrants.PAGE_DEFAULT, int pageSize = AppConstrants.PAGE_SIZE_DEFAULT)
         {
             try
             {
-                var occupations = await _occupationService.GetAllOccupationsAsync();
+                var occupations = await _occupationService.GetAllOccupationsAsync(page, pageSize);
 
                 var occupationsGet = _mapper.Map<List<OccupationGetDto>>(occupations);
 
@@ -73,13 +74,6 @@ namespace BT_MVC_Web.Controllers
             {
                 try
                 {
-                    var existsOccupation = await _occupationService.GetAllOccupationsAsync();
-
-                    if (existsOccupation.Any(c => c.OccupationName == obj.OccupationName))
-                    {
-                        return CustomResult("The Occupation has existed!", HttpStatusCode.BadRequest);
-                    }
-
                     await _occupationService.AddOccupationAsync(obj);
 
                     return CustomResult(HttpStatusCode.Created);

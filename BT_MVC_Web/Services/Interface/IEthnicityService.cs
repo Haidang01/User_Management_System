@@ -5,7 +5,7 @@ namespace BT_MVC_Web.Services.Interface
 {
     public interface IEthnicityService
     {
-        Task<IEnumerable<Ethnicity>> GetAllEthnicityAsync(string? includeProperties = null);
+        Task<IEnumerable<Ethnicity>> GetAllEthnicityAsync(int page, int pageSize, string? includeProperties = null);
         Task<Ethnicity>? GetEthnicityAsync(Expression<Func<Ethnicity, bool>> filter, string? includeProperties = null);
         Task AddEthnicityAsync(Ethnicity ethnicity);
         Task UpdateEthnicityAsync(Ethnicity ethnicity);

@@ -6,7 +6,7 @@ namespace BT_MVC_Web.Services.Interface
 {
     public interface IEmployeeService
     {
-        Task<IEnumerable<Employee>> GetAllEmployeeAsync(string? includeProperties = null);
+        Task<IEnumerable<Employee>> GetAllEmployeeAsync(int page, int pageSize, string? includeProperties = null);
         Task<Employee>? GetEmployeeAsync(Expression<Func<Employee, bool>> filter, string? includeProperties = null);
         Task AddEmployeeAsync(NewEmployeeDto employee);
         void UpdateEmployee(Employee employee);
